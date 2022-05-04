@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import spring.basic.demo.domain.Member;
 import spring.basic.demo.repository.MemberRepositoryInterface;
 
+import java.util.List;
+
 // @Service     spring bean 사용하여 따로 설정했으므로 삭제해야함
 public class MemberService {
 
@@ -21,6 +23,11 @@ public class MemberService {
     }
 
     public Member findMemberBuId(int id){       // findMemberBuId == (repository)findById
+
         return repository.findById(id);
+    }
+
+    public List<Member> findAllMember(){
+        return repository.findAll();            // repository에 findAll 함수 호출
     }
 }

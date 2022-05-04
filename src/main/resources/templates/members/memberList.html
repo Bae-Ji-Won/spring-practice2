@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>모든 정보 출력</title>
+</head>
+<body>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>NAME</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each ="member : ${members}">     <!-- member 변수안에 members를 for:each문을 통해 모든 값을 반복하여 넣는다. -->
+                <td th:text="${member.id}"></td>      <!-- member변수안에 id값을 넣는다. -->
+                <td th:text="${member.name}"></td>      <!-- member변수 안에 name값을 넣는다. -->
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

@@ -6,6 +6,8 @@ import spring.basic.demo.domain.Member;
 
 import javax.sql.DataSource;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 // h2 DB연결 부분
 // @Repository     spring bean 사용하여 따로 설정했으므로 삭제해야함
@@ -41,7 +43,7 @@ public class JdbcMemberRepository implements MemberRepositoryInterface{
             //pstmt.setString(2,m.getName());     // 두번째 칸에 이름 저장
             pstmt.setString(1,m.getName());
 
-            pstmt.executeUpdate();
+            pstmt.executeUpdate();      
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -68,13 +70,49 @@ public class JdbcMemberRepository implements MemberRepositoryInterface{
 
             rs = pstmt.executeQuery();  // select 문 사용시에는 executeQuery 사용
 
-            if(rs.next()){          // rs객체에 값이 없다면
+            if(rs.next()){          // rs객체에 결과값이 있다면
                 Member m = new Member();            // member클래스 불러옴
                 m.setId(rs.getInt("id"));   // m객체의 id값 저장
                 m.setName(rs.getString("name"));    // m객체의 name값 저장
 
                 return m;
             }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            close(conn);            // finally는 try-catch문을 다 실행하고 떠나기 전에 무조건 실행하는  장소
+        }
+
+        return null;
+    }
+
+    @Override
+    public List<Member> findAll() {
+        List<Member> memberList = new ArrayList<>();    // select *from member 결과 담을 리스트
+
+        String sql = "SELECT * FROM member";
+
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+
+        ResultSet rs = null;        // 디비에서 가져올 값을 저장할 객체
+
+        try {
+            conn = dataSource.getConnection();
+            pstmt = conn.prepareStatement(sql);
+
+            rs = pstmt.executeQuery();  // select 문 사용시에는 executeQuery 사용
+
+            while(rs.next()){          // rs객체에 결과값이 있다면(모든 데이터를 출력하기 위해 while 사용)
+                Member m = new Member();            // member클래스 불러옴
+                m.setId(rs.getInt("id"));   // m객체의 id값 저장
+                m.setName(rs.getString("name"));    // m객체의 name값 저장
+
+                memberList.add(m);           // memberlist에 추가
+            }
+
+            return memberList;
 
         } catch (SQLException e) {
             e.printStackTrace();

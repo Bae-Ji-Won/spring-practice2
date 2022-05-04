@@ -1,3 +1,5 @@
+<!-- SQL문을 작성하기 전에 정상작동 하는지 확인하는 페이지 -->
+
 SELECT * FROM member;
 
 DROP TABLE member;

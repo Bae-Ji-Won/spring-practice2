@@ -9,8 +9,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import spring.basic.demo.domain.Member;
 import spring.basic.demo.service.MemberService;
 
+import java.util.List;
 
-// @Controller      spring bean 사용하여 따로 설정했으므로 삭제해야함
+
+@Controller
 public class MemberController {
 
     MemberService service;
@@ -55,4 +57,11 @@ public class MemberController {
         return "members/findMember";
     }
 
+    @GetMapping("members/memberList")
+    public String memberList(Model model){
+        List<Member> members = service.findAllMember();
+        model.addAttribute("members",members);
+
+        return "members/memberList";
+    }
 }

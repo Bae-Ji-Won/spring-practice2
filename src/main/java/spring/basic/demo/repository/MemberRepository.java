@@ -4,6 +4,7 @@ import org.springframework.stereotype.Repository;
 import spring.basic.demo.domain.Member;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -22,5 +23,10 @@ public class MemberRepository implements MemberRepositoryInterface{
     public Member findById(int id) {            // 기준값을 비교하여 member값을 출력함
 
         return dbMap.get(id);
+    }
+
+    @Override
+    public List<Member> findAll() {
+        return null;
     }
 }
